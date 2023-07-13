@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load as_percentage_of %}
+
+{% block content_right %}
+<h1>Статистика лотерей</h1>
+    {% if name_list %}
+
+    <table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Сумма джекпота</th>
+        <th><a href="{% url 'countalllottery' %}">Количество участий</a></th>
+        <th>Потраченные деньги</th>
+        <th>Сумма выигрышей</th>
+        <th><a href="{% url 'countalllottery' %}?sort_by=result">Финансовый результат</a></th>
+        <th>Процент выигрышей</th>
+        <th><a href="{% url 'countalllottery' %}?sort_by=math_waiting">Мат. ожидание</a></th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for name in name_list %}
+            <tr {% if name.result >= 0 %}class="table-success"{% endif %}>
+                <td><a href="{{ name.link }}" target="_blank">{{ name.name }}</a></td>
+                <td><a href="update_jackpot/{{ name.id }}">{{ name.jackpot|intword }}</a></td>
+                <td>{{ name.count }}</td>
+                <td>{{ name.summ_spends }}</td>
+                <td>{{ name.summ_result }}</td>
+                <td class="result">{{ name.result }}</td>
+                <td>{{ name.persent_win|as_percentage_of:name.count }}</td>
+                <td>{{ name.math_waiting }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+        
+
+        {% else %}
+        <p>No data in base</p>
+    </table>
+    {% endif %}
+
+
+{% endblock %}

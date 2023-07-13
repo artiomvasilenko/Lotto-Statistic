@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load as_percentage_of %}
+{% load humanize %}
+
+{% block content_right %}
+
+
+    <h1>Lottery stats</h1>
+
+    <p>All money spends to lottery: <b>{{ sum_spends.sum|intcomma }}</b> rubles</p>
+    <p>All money wins in lottery: <b>{{ sum_wins.sum|intcomma }}</b> rubles</p>
+    <p>Global result: <b>{{ global_result|intcomma }}</b> rubles</p>
+    <p>total_number_of_tickets: <b>{{ total_number_of_tickets }}</b></p>
+    <p>total_number_of_wins: <b>{{ total_number_of_wins }}</b></p>
+    <p>Global percentable wins: <b>{{ total_number_of_wins|as_percentage_of:total_number_of_tickets }}</b></p>
+    
+
+{% endblock %}
+
+
+
+
+
